@@ -62,7 +62,7 @@ HOSTOS = $(shell uname -s)
 TARGETOS ?= $(HOSTOS)
 
 # Directory that gbdk should finally end up in
-TARGETDIR = /opt/gbdk
+TARGETDIR ?= /opt/gbdk
 # Directory that gbdk for this target is built into.
 BUILDDIR = $(TOPDIR)/build/gbdk
 
@@ -120,7 +120,7 @@ src: clean
 # Base rules
 gbdk-build: gbdk-support-build gbdk-lib-build
 
-gbdk-install: $(BUILDDIR)/bin gbdk-support-install gbdk-lib-install sdcc-install
+gbdk-install: $(BUILDDIR)/bin gbdk-support-install gbdk-lib-install
 
 # Directories
 $(BUILDDIR)/bin:
@@ -294,7 +294,8 @@ gbdk-dist-examples-clean:
 # Copy SDDC executable files and DLLs
 # win 32 specific: libgcc_s_dw2-1.dll
 # win 64 specific: libgcc_s_seh-1.dll
-SDCC_BINS = packihx sdar sdasgb sdcc sdcpp sdldgb sdnm sdobjcopy sdranlib sdasz80 sdldz80 sdas6500 sdld6808 sdld
+# XXX: made assignment overridable b/c we don't need to copy sdcc
+SDCC_BINS ?= packihx sdar sdasgb sdcc sdcpp sdldgb sdnm sdobjcopy sdranlib sdasz80 sdldz80 sdas6500 sdld6808 sdld
 ifeq ($(OS),Windows_NT)
 
 # Check for 32 bit Windows target a couple different ways and select the matching SDCC DLL

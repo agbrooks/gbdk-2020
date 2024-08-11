@@ -11,8 +11,10 @@
 
 #ifdef __SDCC
 
-#define NONBANKED			__nonbanked
-#define BANKED				__banked
+// OK, look, I have no idea whether or not this is safe, but the latest sdcc doesn't seem to
+// respect these and won't parse them -- we're just going to make them no-ops.
+#define NONBANKED			//__nonbanked
+#define BANKED				//__banked
 #define REENTRANT			__reentrant /**< Needed for mos6502 target when functions take too many parameters. */
 #define NO_OVERLAY_LOCALS	__no_overlay_locals /**< Optimization for mos6502 target, indicating locals won't conflict with compiler's overlay segment */
 
