@@ -24,15 +24,29 @@
           TARGETDIR = "${placeholder "out"}";
         };
 
+        # OK, look, full disclosure, we're sort of butchering this, but
+        # I want to get this working for defcon 32 badge hacking and I don't
+        # really care
+
         buildPhase = ''
         runHook preBuild
 
         make gbdk-build
         mkdir -p $out
+
         mkdir -p build/bin
+        cp ${pkgs.sdcc}/bin/* build/bin/
+        cp -R ${pkgs.sdcc}/libexec build/libexec
+        cp -R ${pkgs.sdcc}/share build/share
         make gbdk-install
 
         runHook postBuild
+        '';
+
+        installPhase = ''
+        cp -R build/gbdk/* $out/
+        cp -R build/* $out/
+        runHook postInstall
         '';
       };
       devShells.default = with pkgs; mkShell {
